@@ -11,5 +11,60 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependency directories
+vendor/
+
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Python: byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Python: virtual environments
+.env/
+.coverage
+.python-version
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore apt/build cache
+.cache/*
+
+# Packer build artifacts
+*.box
+*.iso
+*.vdi
+
+# Terraform
+.terraform
+*.plan
+
+# Log files
+*.log
+
+# Cscope
+cscope.*
+
+# IntelliJ
+.idea/
+
+# MacOS artifacts
+.DS_Store
