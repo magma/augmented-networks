@@ -16,7 +16,7 @@
 syntax = "proto3";
 
 package protos;
-option go_package = "github.com/magma/accounting/protos";
+option go_package = "github.com/magma/augmented-network/accounting/protos";
 
 // Basic Smart Contract Accounting Service
 service accounting {

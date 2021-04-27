@@ -1,0 +1,95 @@
+//
+// Copyright 2021 Author. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+syntax = "proto3";
+
+package protos;
+option go_package = "github.com/magma/augmented-network/authentication/protos";
+
+// Authentication Service for [Universal] Subscriber Identity Module based clients
+service SIMAuthenticator {
+    // Authentication-Information request RPC
+    rpc AuthInfo (AuthenticationInformationRequest) returns (AuthenticationInformationAnswer);
+}
+
+enum RAT_Type {
+    WLAN = 0;
+    VIRTUAL = 1;
+    UTRAN = 1000;
+    GERAN = 1001;
+    GAN = 1002;
+    HSPA_EVOLUTION = 1003;
+    EUTRAN = 1004;
+    CDMA2000_1X = 2000;
+    HRPD = 2001;
+    UMB = 2002;
+    EHRPD = 2003;
+}
+
+// Authentication Information Request
+message AuthenticationInformationRequest {
+    // Subscriber identifier (IMSI)
+    string UserName = 1;
+    // RAT Type - optional parameter
+    RAT_Type RatType = 2;
+    // AuthenticationScheme UTF8Stringn: "EAP-AKA, EAP-AKA', etc." - optional parameter
+    string AuthenticationScheme = 3;
+    // Number of EUTRAN vectors to request in response
+    uint32 RequestedEutranVectors = 4;
+    // Concatenation of RAND and AUTS in the case of a resync attach case (optional)
+    bytes EutranResyncInfo = 5;
+    // Number of UTRAN/GERAN vectors to request in response (optional)
+    uint32 RequestedUtranGeranVectors = 6;
+    // UTRAN/GERAN Resync Info (optional)
+    bytes UtranGeranResyncInfo = 7;
+}
+
+// Authentication Information Answer (Section 7.2.6)
+message AuthenticationInformationAnswer {
+    // 3GPP TS 29.272, 7.3.18 E-UTRAN-Vector
+    // For details about fields read 3GPP 33.401
+    message EUTRANVector {
+        bytes rand = 1;
+        bytes xres = 2;
+        bytes autn = 3;
+        bytes kasme = 4;
+    }
+    // 3GPP TS 29.272, Section 7.3.19 UTRAN-Vector
+    message UTRANVector {
+        bytes rand = 1;
+        bytes xres = 2;
+        bytes autn = 3;
+        bytes confidentiality_key   = 4;
+        bytes integrity_key   = 5;
+    }
+    // 3GPP TS 29.272, 7.3.20 GERAN-Vector
+    message GERANVector {
+        bytes rand = 1;
+        bytes sres = 2;
+        bytes Kc   = 3;
+    }
+
+    // Authentication vectors matching the requested number
+    repeated EUTRANVector EutranVectors = 2;
+    repeated UTRANVector  UtranVectors = 3;
+    repeated GERANVector  GeranVectors = 4;
+
+    // Optional User Profile (
+    message UserProfile {
+        // MSISDN
+        string Msisdn = 1;
+    }
+    UserProfile Profile = 5;
+}
