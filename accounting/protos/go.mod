@@ -1,4 +1,4 @@
-module github.com/magma/accounting
+module github.com/magma/augmented-networks/accounting/protos
 
 go 1.14
 
