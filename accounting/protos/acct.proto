@@ -57,16 +57,19 @@ message session {
         bytes  hardware_addr = 3;
         string name = 4;
     }
-    // ID of the user network (MNO, Identity Provider, etc.)
-    string user_network_id = 5;
+    // ID of the user network (MNO, Identity Provider, etc. - user network ID)
+    string consumer_id = 5;
     // unique session ID
     string session_id = 6;
-    // ID of the service provider network
-    string serving_network_id = 7;
-    // ID of the service provider gateway (AP, AGW, enodeb, etc.)
-    string serving_gateway_id = 8;
-    // available QoS at the caller's site
-    QoS    available_qos = 9;
+    // ID of the service provider network (serving network ID)
+    string provider_id = 7;
+    // ID/Name of the serving provider Access Point (WiFi AP, LTE enodeb, etc.) - optional
+    string provider_apn = 8;
+    // ID of the service provider gateway  (AGW, CWAG, etc.) - optional
+    // Note: this is the ID of Magma access gateway, multiple APs/enodebs may be connected to a single access gateway
+    string provider_gateway_id = 9;
+    // available QoS at the caller's site (optional - can be ignored by SC)
+    QoS    available_qos = 10;
 }
 
 // start session response
@@ -88,7 +91,7 @@ message session_resp {
     }
     report_limits reporting_advisory = 1;
     // minimal required QoS, the session has to be terminated if service provider's site
-    // cannot guarantee the requested QoS
+    // cannot guarantee the requested QoS (optional)
     QoS           min_acceptable_qos = 2;
 }
 
