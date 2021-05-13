@@ -15,6 +15,6 @@
 //
 // package protos provides proto definitions of basic accounting service
 //
-//go:generate protoc -I . --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative acct.proto
+//go:generate protoc -I . --go_out=plugins=grpc,paths=source_relative:. acct.proto
 
 package protos
