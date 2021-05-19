@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// package protos provides proto definitions of basic accounting service
 //
 //go:generate protoc -I . --go_out=plugins=grpc,paths=source_relative:. acct.proto
 
+// package protos provides proto definitions of basic accounting service
 package protos
