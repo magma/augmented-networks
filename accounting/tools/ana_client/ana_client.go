@@ -98,7 +98,7 @@ func main() {
 	for i := 0; i <= threads; i++ {
 		go run(done)
 	}
-	for i := 0; i < *concurentClients; i++ {
+	for i := 0; i <= threads; i++ {
 		<-done
 	}
 }
